@@ -1,0 +1,16 @@
+@startuml
+
+' Define trust boundaries
+package DMZ {
+    class WebServer
+}
+
+package Internal {
+    database Database
+}
+
+' Define relationships / data flows
+WebServer --> Database
+
+@enduml
+s

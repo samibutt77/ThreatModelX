@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ThreatX - Set Up MFA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #eef2f7, #dbe3f0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+
+    .mfa-container {
+      background: #ffffff;
+      padding: 40px 35px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .mfa-container:hover {
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      font-size: 32px;
+      color: #3949ab;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    p b {
+      color: #283593;
+      font-weight: 600;
+    }
+
+    .secret-box {
+      display: inline-block;
+      padding: 12px 20px;
+      background: #f7f8ff;
+      border: 1px solid #d8dffc;
+      border-radius: 10px;
+      font-family: monospace;
+      font-size: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 50, 0.05);
+      word-break: break-all;
+    }
+
+    a {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #3949ab;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      background: #1e2f78;
+    }
+
+    @media (max-width: 500px) {
+      .mfa-container {
+        padding: 30px 20px;
+      }
+
+      h2 {
+        font-size: 28px;
+      }
+
+      .secret-box {
+        font-size: 16px;
+        padding: 10px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mfa-container">
+    <h2>Set Up MFA</h2>
+
+    <p>Scan this code in Google Authenticator or any TOTP app:</p>
+
+    <div class="secret-box">{{ secret }}</div>
+
+    <p>Add a new TOTP account manually using this secret.</p>
+
+    <a href="/login">Go to Login</a>
+  </div>
+</body>
+</html>

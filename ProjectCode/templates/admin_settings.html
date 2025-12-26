@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ThreatX - Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #eef2f7;
+      color: #333;
+    }
+
+    .dashboard-container {
+      max-width: 900px;
+      margin: 50px auto;
+      background: #ffffff;
+      padding: 40px 35px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+
+    .dashboard-container:hover {
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      font-size: 32px;
+      color: #3949ab;
+      margin-bottom: 10px;
+    }
+
+    p.welcome {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul li {
+      margin: 15px 0;
+    }
+
+    ul li a {
+      display: inline-block;
+      width: 100%;
+      padding: 14px 20px;
+      background: #3949ab;
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    ul li a:hover {
+      background: #1e2f78;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 600px) {
+      .dashboard-container {
+        padding: 30px 25px;
+      }
+
+      h2 {
+        font-size: 28px;
+      }
+
+      p.welcome {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <h2>Admin Dashboard</h2>
+    <p class="welcome">Welcome, {{ current_user.username }}!</p>
+
+    <ul>
+      <li><a href="/view_logs">View Audit Logs</a></li>
+      <li><a href="/manage_rules">Manage Threat Rules</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </div>
+</body>
+</html>

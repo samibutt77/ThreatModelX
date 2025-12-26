@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Threat Modeling Toolkit</title>
+
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  body {
+    font-family: 'Inter', "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #eef2f7;
+    color: #333;
+  }
+
+  header {
+    background: linear-gradient(90deg, #3949ab, #5c6bc0);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 35px 40px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+  }
+
+  .container:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 50px;
+  }
+
+  input[type="file"],
+  select {
+    padding: 14px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    background: #fdfdfd;
+    transition: border 0.2s, box-shadow 0.2s;
+  }
+
+  input[type="file"]:focus,
+  select:focus {
+    border-color: #3949ab;
+    box-shadow: 0 0 0 2px rgba(57, 73, 171, 0.2);
+    outline: none;
+  }
+
+  button {
+    padding: 14px;
+    background: #3949ab;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #1e2f78;
+  }
+
+  h2 {
+    margin-top: 30px;
+    font-size: 26px;
+    border-bottom: 3px solid #3949ab;
+    display: inline-block;
+    padding-bottom: 6px;
+    color: #283593;
+  }
+
+  .threat {
+    background: #f7f8ff;
+    border-left: 5px solid #3949ab;
+    padding: 22px 25px;
+    margin: 20px 0;
+    border-radius: 12px;
+    box-shadow: 0 3px 14px rgba(0, 0, 50, 0.05);
+    transition: 0.2s;
+  }
+
+  .threat:hover {
+    box-shadow: 0 5px 20px rgba(0, 0, 50, 0.08);
+  }
+
+  .threat h3 {
+    color: #283593;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .threat p {
+    font-size: 15px;
+    margin: 5px 0;
+    line-height: 1.5;
+  }
+
+  .download-link {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 14px 24px;
+    background: #00bfa5;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+  }
+
+  .download-link:hover {
+    background: #008f7a;
+  }
+
+  img {
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    margin-top: 15px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      padding: 25px 20px;
+    }
+
+    header {
+      font-size: 26px;
+    }
+  }
+</style>
+
+
+    
+  </head>
+
+  <body>
+    <header>Threat Modeling Toolkit</header>
+
+    <div class="container">
+      <form method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <label><strong>Select Files:</strong></label>
+        <input type="file" name="files[]" multiple required />
+
+        <label><strong>Select Type(s):</strong></label>
+        <select name="types[]" multiple required>
+          <option value="uml">UML</option>
+          <option value="openapi">OpenAPI</option>
+          <option value="iac">IaC</option>
+          <option value="source">Source Code</option>
+        </select>
+
+        <button type="submit">Upload & Analyze</button>
+      </form>
+
+      {% if threats %}
+      <h2>Threat Report</h2>
+
+      {% for t in threats %}
+      <div class="threat">
+        <h3>
+          Threat: {{ t['findings'][0]['title'] if t['findings'] else t['stride']
+          }}
+        </h3>
+
+        <p>
+          <strong>Detected:</strong> {{ t['component'] }} ({{
+          t['component_type'] }})
+        </p>
+
+        <p><strong>DREAD Score:</strong> {{ t['dread_score'] }}</p>
+
+        <p>
+          <strong>Mitigation:</strong>
+          {{ t['suggested_mitigation'] }}
+        </p>
+      </div>
+      {% endfor %}
+
+      <a class="download-link" href="{{ url_for('download_report') }}">
+        Download Full Threat Report
+      </a>
+      {% endif %} {% if diagram_filename %}
+      <h2>Annotated Diagram</h2>
+      <img
+        src="{{ url_for('download_file', filename=diagram_filename) }}"
+        alt="Annotated Diagram"
+        style="max-width: 100%; border: 1px solid #ccc; margin-top: 10px"
+      />
+      {% endif %}
+    </div>
+  </body>
+</html>

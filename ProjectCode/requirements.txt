@@ -1,0 +1,17 @@
+Flask
+graphviz
+plantuml
+pydot
+PyYAML
+Werkzeug
+flask
+flask-login
+flask-wtf
+email-validator
+bcrypt
+pyotp
+qrcode
+PyJWT
+cryptography
+
+

@@ -2,24 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Use Secret') {
             steps {
-                echo 'Building..'
-                // Here you can define commands for your build
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-                // Here you can define commands for your tests
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-                // Here you can define commands for your deployment
+                // Inject secret from Jenkins Credentials
+                withCredentials([string(credentialsId: 'my-secret', variable: 'API')]) {
+                    // Safe use of secret
+                    echo "Using secret safely"
+                    
+                }
             }
         }
     }
